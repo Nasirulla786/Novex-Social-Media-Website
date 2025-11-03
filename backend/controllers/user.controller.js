@@ -135,3 +135,27 @@ export const follow = async (req, res) => {
     console.log(error);
   }
 };
+
+
+
+export const Search = async (req, res) => {
+  try {
+    const keyword = req.query.keyword;
+
+    if (!keyword) {
+      return res.status(400).json({ message: "Required Input" });
+    }
+
+    const user = await User.find({
+      $or: [
+        { userName: { $regex: keyword, $options: "i" } },
+        { name: { $regex: keyword, $options: "i" } },
+      ],
+    }).select("-password");
+
+    return res.status(200).json(user);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Server Error" });
+  }
+};

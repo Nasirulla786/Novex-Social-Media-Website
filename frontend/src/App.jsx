@@ -15,6 +15,7 @@ import useGetAllPosts from "./hooks/useGetAllPosts.jsx";
 import Loop from "./pages/Loop.jsx";
 import StoryPage from "./pages/StoryPage.jsx";
 import useGetAllFollowersStory from "./hooks/useGetAllFollowersStory.jsx";
+import Search from "./pages/Search.jsx";
 
   export const ServelURL = "http://localhost:8000";
 
@@ -42,6 +43,7 @@ import useGetAllFollowersStory from "./hooks/useGetAllFollowersStory.jsx";
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/profile/:username" element={<ProfilePage />} />
         <Route path="/editprofile" element={<EditProfile />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/uploadpost" element={userData?<UplaodPage />:"/signup"}/>
         <Route path = "/loop" element={userData?<Loop />:"signup"} />
         <Route path="/story/:username" element={userData?<StoryPage />:"signup"} />

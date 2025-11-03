@@ -18,7 +18,7 @@ const UploadPage = () => {
   const [caption, setCaption] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false)
   const { storyData } = useSelector((state) => state.story);
   const { loopData } = useSelector((state) => state.loop);
   const { postData } = useSelector((state) => state.post);
@@ -33,6 +33,8 @@ const UploadPage = () => {
 
   const uploadHandler = async (url, action, dataSet) => {
     try {
+
+        setLoading(true)
       const formData = new FormData();
       if (uploadType !== "story") formData.append("caption", caption);
       formData.append("mediaType", mediaType);
@@ -42,11 +44,19 @@ const UploadPage = () => {
         withCredentials: true,
       });
 
+
       if (res?.data) dispatch(action([...dataSet, res.data]));
+
+      if(res){
+           setLoading(false)
+      }
+
 
       alert(`${uploadType} uploaded successfully!`);
       setFrontendImage("");
       setCaption("");
+
+
 
       // ✅ Navigate to home after upload
       navigate("/");
@@ -143,7 +153,7 @@ const UploadPage = () => {
         onClick={handleUploadButton}
         className="mt-8 px-10 py-3 bg-white text-black font-semibold rounded-full shadow-lg hover:scale-105 hover:bg-gray-200 transition-all duration-300"
       >
-        Upload {uploadType}
+       {loading?"Wait... ": `Upload${uploadType}`  }
       </button>
     </div>
   );

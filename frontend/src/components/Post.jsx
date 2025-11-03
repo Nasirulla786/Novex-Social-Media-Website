@@ -170,22 +170,26 @@ const Post = ({ post }) => {
       </div>
 
       {/* ====== Comment Input ====== */}
-      <div className="px-4 pb-4">
-        <div className="flex items-center gap-2 mb-3">
-          <input
-            type="text"
-            className="flex-1 border border-gray-300 rounded-lg px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400"
-            placeholder="Write a comment..."
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <button
-            className="text-sm bg-black text-white px-3 py-1 rounded-lg hover:bg-gray-800"
-            onClick={handleComment}
-          >
-            Submit
-          </button>
-        </div>
+      <div className="px-4 pb-4 rounded-lg">
+   <div className="flex items-center gap-2 mb-3 w-full bg-[#0a0a0a] px-3 py-2 rounded-xl shadow-[0_0_10px_rgba(255,255,0,0.2)] border border-yellow-400 focus-within:shadow-[0_0_20px_rgba(255,255,0,0.5)] transition-all duration-300">
+  {/* 📝 Input Field */}
+  <input
+    type="text"
+    className="flex-1 bg-transparent text-yellow-300 placeholder-gray-500 px-2 py-2 outline-none text-sm sm:text-base"
+    placeholder="Write your thoughts..."
+    value={message}
+    onChange={(e) => setMessage(e.target.value)}
+  />
+
+  {/* 🚀 Submit Button */}
+  <button
+    onClick={handleComment}
+    className="bg-yellow-400 text-black font-semibold px-4 py-2 rounded-full hover:bg-yellow-300 active:scale-95 transition-all duration-200"
+  >
+    Add Comment
+  </button>
+</div>
+
 
         {/* ====== Comments List ====== */}
         <div className={showCommnet?"space-y-2 block": "hidden"}>

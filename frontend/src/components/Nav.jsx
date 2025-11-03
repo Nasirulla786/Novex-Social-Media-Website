@@ -10,7 +10,7 @@ const Nav = () => {
   return (
     <div className="w-[90%] lg:w-[40%] h-[80px] bg-yellow-500 flex justify-around items-center fixed bottom-[20px] rounded-full shadow-2xl shadow-[#000000] z-[100]">
       <Home />
-      <Search />
+      <Search onClick={()=>navigate("/search")} />
 
         <Plus onClick={()=>navigate("/uploadpost")}   />
 

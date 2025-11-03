@@ -16,7 +16,7 @@ const FeedHome = () => {
   // console.log(userData)
   // console.log(postData)
   return (
-    <div className="w-full sm:w-[50%] bg-black text-white h-screen">
+    <div className="w-full sm:w-[75%] bg-black text-white h-screen">
       <div className="sm:hidden flex justify-between p-[20px] items-center">
         <h1>
           <Logo />
