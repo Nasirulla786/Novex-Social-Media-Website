@@ -18,8 +18,10 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "https://novex-social-website.netlify.app",
-    credentials: true,
+    origin: (origin, callback) => {
+      callback(null, true); 
+    },
+    credentials: true, 
   })
 );
 
