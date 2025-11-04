@@ -12,7 +12,7 @@ import OtherProfile from "./OtherProfile";
 
 const LeftHome = () => {
   GetCureentUserData();
-  const { userData ,  suggestedusers } = useSelector((state) => state.user);
+  const { userData, suggestedusers } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ const LeftHome = () => {
       navigate("/signup");
 
       if (res) {
-        alert("LogOut SuccessFully");
+        alert("Logged out successfully!");
       }
     } catch (error) {
       console.log(error);
@@ -33,60 +33,63 @@ const LeftHome = () => {
   };
 
   return (
-    <div className="hidden sm:block sm:w-[25%] bg-black h-screen text-white">
-      <div className="flex justify-between p-[20px] items-center">
-        <h1>
+    <div className="hidden sm:flex sm:flex-col sm:w-[25%] h-screen bg-[#0e0e0e] text-white border-r border-gray-800 shadow-lg overflow-y-auto">
+      {/* --- Header Section --- */}
+      <div className="flex justify-between items-center px-6 py-5 border-b border-gray-800">
+        <div className="flex items-center gap-2">
           <Logo />
-        </h1>
-        <Heart className="fill-red-500 text-red-400" />
+        </div>
+        <Heart className=" text-white cursor-pointer hover:scale-110 transition-transform" />
       </div>
 
-       <div className="bg-gray-700 h-0.5 w-full "></div>
-
-      <div className="flex justify-between items-center    p-[20px]">
-        <div className="flex items-center gap-2.5">
-          <div className="w-[50px] h-[50px] rounded-full">
+      {/* --- Current User Section --- */}
+      <div className="flex items-center justify-between px-6 py-5 border-b border-gray-800 hover:bg-[#1a1a1a] transition-all">
+        <div className="flex items-center gap-3">
+          <div className="w-[55px] h-[55px] rounded-full overflow-hidden ring-2 ring-gray-700">
             <img
               src={userData?.profileImage || defaultImage}
-              alt="None"
-              className="w-full h-full object-cover rounded-full"
+              alt="User"
+              className="w-full h-full object-cover"
             />
           </div>
-
           <div>
-            <h1 className="font-bold font-sans">{userData?.name}</h1>
-            <h1 className="font-semibold text-[12px] text-gray-400">
-              {userData?.userName}
-            </h1>
+            <h1 className="font-semibold text-lg">{userData?.name}</h1>
+            <p className="text-gray-400 text-sm">@{userData?.userName}</p>
           </div>
         </div>
-
-        <h1
-          className="text-yellow-400 font-bold cursor-pointer"
+        <button
           onClick={handleLogout}
+          className="text-sm font-semibold text-yellow-400 hover:text-yellow-300 transition"
         >
-          Log Out
-        </h1>
+          Logout
+        </button>
       </div>
 
-      <div className="bg-gray-700 h-0.5 w-full "></div>
+      {/* --- Suggested Users --- */}
+      <div className="px-6 py-4">
+        <h2 className="font-semibold text-gray-300 text-lg mb-3 tracking-wide">
+          Suggested for you
+        </h2>
 
-      <h1 className="font-bold px-[20px] py-3">Suggested Users</h1>
-
-
-      <div className=" h-fit p-[20px] ">
-        {
-          suggestedusers && suggestedusers.slice(0,3).map((value,idx)=> {
-            return(
-              <div key={idx} className="py-2">
-
-                <OtherProfile   user={value}/>
+        <div className="flex flex-col gap-4">
+          {suggestedusers && suggestedusers.length > 0 ? (
+            suggestedusers.slice(0, 3).map((value, idx) => (
+              <div
+                key={idx}
+                className="p-2 rounded-xl hover:bg-[#1a1a1a] transition-all cursor-pointer"
+              >
+                <OtherProfile user={value} />
               </div>
-            )
-          })
+            ))
+          ) : (
+            <p className="text-gray-500 text-sm">No suggestions available.</p>
+          )}
+        </div>
+      </div>
 
-        }
-
+      {/* --- Footer (Optional Branding) --- */}
+      <div className="mt-auto py-4 text-center border-t border-gray-800 text-xs text-gray-500">
+        © {new Date().getFullYear()} <span className="text-yellow-400 font-semibold">Novex</span>
       </div>
     </div>
   );

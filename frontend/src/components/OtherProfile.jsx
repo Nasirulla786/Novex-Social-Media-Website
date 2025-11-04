@@ -31,7 +31,7 @@ const OtherProfile = ({ user }) => {
         Follow
       </div> */}
 
-      <FollowButton  tailwind={"w-[100px] h-[30px] text-black bg-white rounded-2xl cursor-pointer flex items-center justify-center text-[12px]"} />
+      <FollowButton  tailwind={"w-[100px] h-[30px] text-black bg-white rounded-2xl cursor-pointer flex items-center justify-center text-[12px]"} targetUserID={user?._id} />
     </div>
   );
 };

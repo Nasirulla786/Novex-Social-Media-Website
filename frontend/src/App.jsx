@@ -1,54 +1,110 @@
-  import React from "react";
-  import { Routes, Route, Navigate } from "react-router-dom";
-  import Signup from "./pages/Signup.jsx";
-  import Login from "./pages/Login.jsx";
-  import ForgetPassword from "./pages/ForgetPassword.jsx";
-  import GetCureentUserData from "./hooks/GetCureentUserData.jsx";
-  import { useSelector } from "react-redux";
-  // import useCurrentUser from "./hooks/useCurrentUser";
-  import Home from "./pages/Home.jsx";
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Signup from "./pages/Signup.jsx";
+import Login from "./pages/Login.jsx";
+import ForgetPassword from "./pages/ForgetPassword.jsx";
+import GetCureentUserData from "./hooks/GetCureentUserData.jsx";
+import { useSelector } from "react-redux";
+import Home from "./pages/Home.jsx";
 import SuggestedUsers from "./hooks/SuggestedUsers.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import EditProfile from "./pages/EditProfile.jsx";
 import UplaodPage from "./pages/UplaodPage.jsx";
-import useGetAllPosts from "./hooks/useGetAllPosts.jsx";
+import useGetAllFollowersStory from "./hooks/useGetAllFollowersStory.jsx";
 import Loop from "./pages/Loop.jsx";
 import StoryPage from "./pages/StoryPage.jsx";
-import useGetAllFollowersStory from "./hooks/useGetAllFollowersStory.jsx";
 import Search from "./pages/Search.jsx";
 
-  export const ServelURL = "http://localhost:8000";
+export const ServelURL = "http://localhost:8000";
 
-  const App = () => {
-    GetCureentUserData();
-    SuggestedUsers();
-    useGetAllFollowersStory();
-    // useGetAllPosts();
-    const { userData } = useSelector((state) => state.user);
-    // console.log("thisis chutiyaa user datas", userData);
+// ✅ Protected Route Component
+const ProtectedRoute = ({ children }) => {
+  const { userData } = useSelector((state) => state.user);
+  if (!userData) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+};
 
-    // console.log("Redux userData:", GetCureentUserData());
+const App = () => {
+  GetCureentUserData();
+  SuggestedUsers();
+  useGetAllFollowersStory();
 
-    return (
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/signup"
-          element={!userData ? <Signup /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/login"
-          element={!userData ? <Login /> : <Navigate to="/" />}
-        />
-        <Route path="/forget-password" element={<ForgetPassword />} />
-        <Route path="/profile/:username" element={<ProfilePage />} />
-        <Route path="/editprofile" element={<EditProfile />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/uploadpost" element={userData?<UplaodPage />:"/signup"}/>
-        <Route path = "/loop" element={userData?<Loop />:"signup"} />
-        <Route path="/story/:username" element={userData?<StoryPage />:"signup"} />
-      </Routes>
-    );
-  };
+  const { userData } = useSelector((state) => state.user);
 
-  export default App;
+  return (
+    <Routes>
+      {/* ✅ Protect home route */}
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/signup"
+        element={!userData ? <Signup /> : <Navigate to="/" />}
+      />
+      <Route
+        path="/login"
+        element={!userData ? <Login /> : <Navigate to="/" />}
+      />
+      <Route path="/forget-password" element={<ForgetPassword />} />
+
+      <Route
+        path="/profile/:username"
+        element={
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/editprofile"
+        element={
+          <ProtectedRoute>
+            <EditProfile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/uploadpost"
+        element={
+          <ProtectedRoute>
+            <UplaodPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/loop"
+        element={
+          <ProtectedRoute>
+            <Loop />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/story/:username"
+        element={
+          <ProtectedRoute>
+            <StoryPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/search"
+        element={
+          <ProtectedRoute>
+            <Search />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
+  );
+};
+
+export default App;
