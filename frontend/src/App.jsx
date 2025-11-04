@@ -15,9 +15,9 @@ import Loop from "./pages/Loop.jsx";
 import StoryPage from "./pages/StoryPage.jsx";
 import Search from "./pages/Search.jsx";
 
-export const ServelURL = "http://localhost:8000";
+export const ServelURL = "https://novex-social-web.onrender.com";
 
-// ✅ Protected Route Component
+
 const ProtectedRoute = ({ children }) => {
   const { userData } = useSelector((state) => state.user);
   if (!userData) {
